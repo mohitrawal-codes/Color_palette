@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HueBot – AI Color Palette Assistant</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #ecf0f3;
+      --surface: #f7f9fc;
+      --text: #111;
+      --text-light: #666;
+      --accent: #007aff;
+      --radius: 26px;
+      --shadow-dark: rgba(0, 0, 0, 0.18);
+      --shadow-light: rgba(255, 255, 255, 0.85);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+      scrollbar-width: none;
+    }
+
+    body {
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* ================= HERO SECTION ================= */
+
+    .landing-container {
+      height: 100vh; /* FULL SCREEN — NO SCROLL ON DESKTOP */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    /* Floating blobs */
+    .blob {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      filter: blur(55px);
+      opacity: 0.75;
+      z-index: -1;
+      animation: floatBlobs 6s infinite linear;
+    }
+
+    .blob.blue { background: #7ab6ff; top: -10%; left: -12%; }
+    .blob.pink { background: #ff8bbd; bottom: -12%; right: -10%; }
+
+    @keyframes floatBlobs {
+      0% { transform: translate(0,0) rotate(0); }
+      50% { transform: translate(40px, -30px) rotate(160deg); }
+      100% { transform: translate(0,0) rotate(360deg); }
+    }
+
+    /* Hero Text */
+    .hero {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Animated HUEBOT Logo */
+    .logo {
+      font-size: 4rem;
+      font-weight: 900;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .logo span {
+      display: inline-block;
+      animation: colorChange 1.2s infinite alternate;
+    }
+
+    .logo span:nth-child(1){ animation-delay: 0s; }
+    .logo span:nth-child(2){ animation-delay: .2s; }
+    .logo span:nth-child(3){ animation-delay: .4s; }
+    .logo span:nth-child(4){ animation-delay: .6s; }
+    .logo span:nth-child(5){ animation-delay: .8s; }
+    .logo span:nth-child(6){ animation-delay: 1s; }
+
+    @keyframes colorChange {
+      0%   { color: #ff5f91; transform: translateY(0); }
+      50%  { color: #4da3ff; transform: translateY(-6px); }
+      100% { color: #9b59ff; transform: translateY(0); }
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    /* ================= FEATURES ================= */
+
+    .features {
+      display: grid;
+      gap: 18px;
+      padding: 10px;
+      width: 85%;
+      margin: auto;
+      grid-template-columns: repeat(4, 1fr); /* STRICT 4-COLUMN DESKTOP */
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 16px;
+      text-align: center;
+      border-radius: var(--radius);
+      box-shadow:
+        8px 8px 20px var(--shadow-dark),
+        -8px -8px 20px var(--shadow-light);
+      transition: 0.3s ease;
+      background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta-wrapper {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .cta-btn {
+      padding: 18px 40px;
+      border-radius: var(--radius);
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: var(--surface);
+      border: none;
+      cursor: pointer;
+      box-shadow:
+        6px 6px 14px var(--shadow-dark),
+        -6px -6px 14px var(--shadow-light);
+      transition: .25s;
+      background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+    }
+
+    .cta-btn:hover {
+      background: linear-gradient(
+    120deg,
+    transparent,
+    rgb(255, 255, 255),
+    transparent
+  );
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    /* Tablet → 2x2 layout */
+    @media (max-width: 1023px) {
+      body { overflow-y: auto; }
+
+      .landing-container {
+        height: auto;
+        padding-bottom: 60px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 20px;
+      }
+    }
+
+    /* Mobile → stacked */
+    @media (max-width: 767px) {
+      .logo { font-size: 2.7rem; }
+
+      .features {
+        grid-template-columns: 1fr;
+        width: 90%;
+      }
+
+      .cta-btn {
+        width: 90%;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- BLOBS -->
+  <div class="blob blue"></div>
+  <div class="blob pink"></div>
+
+  <div class="landing-container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="logo">
+        <span>H</span><span>U</span><span>E</span><span>B</span><span>O</span><span>T</span>
+      </div>
+      <p class="subtitle">AI-Powered Color Palette Designer</p>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+
+      <div class="feature-card">
+        <h3>🎨 AI Palettes</h3>
+        <p>Generate monochrome, varied & designer color sets.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🖱️ Color Wheel</h3>
+        <p>Pick brand colors with precision.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>⚡ Export Tools</h3>
+        <p>Copy CSS or export PNG instantly.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>💡 Usage Guide</h3>
+        <p>Each color includes UI/UX usage hints.</p>
+      </div>
+
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-wrapper">
+      <button class="cta-btn" onclick="window.location.href='color palette generator/index.html'">
+        Start Creating →
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>

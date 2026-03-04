@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HueBot – AI Color Palette Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <h1 class="title">HueBot</h1>
+      <p class="subtitle">AI Color Palette Designer</p>
+    </header>
+
+    <!-- CHAT SECTION -->
+    <section class="chat-container neu" id="chatSection">
+      <div class="chat-messages" id="chatMessages"></div>
+
+      <!-- Typing -->
+      <div class="typing-indicator" id="typingIndicator">
+        <span></span><span></span><span></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- OPTION MODAL -->
+  <div id="optionModalOverlay" class="modal-overlay" hidden></div>
+  <div id="optionModal" class="modal neu" hidden>
+    <div class="modal-header">
+      <h3 id="optionModalTitle">Select an option</h3>
+    </div>
+
+    <div id="optionModalBody" class="modal-body"></div>
+  </div>
+
+  <!-- COLOR WHEEL MODAL -->
+  <div id="colorWheelOverlay" class="modal-overlay" hidden></div>
+  <div id="colorWheelModal" class="modal neu" hidden>
+    <div class="modal-header">
+      <h3 id="colorWheelLabel">Pick a color</h3>
+    </div>
+
+    <div class="modal-body color-wheel-body">
+      <canvas id="colorWheelCanvas" width="260" height="260"></canvas>
+      <div id="selectedColorPreview" class="color-preview-circle"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn solid" id="confirmColorBtn">Use this</button>
+    </div>
+  </div>
+
+  <!-- PALETTE MODAL -->
+  <div id="paletteModalOverlay" class="modal-overlay" hidden></div>
+  <div id="paletteModal" class="modal neu" hidden>
+    <div class="modal-header">
+      <h3>🎨 Your Palette</h3>
+    </div>
+
+    <div class="modal-body">
+      <div id="paletteModalGrid" class="palette-grid"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn outline" id="modalCopyCss">Copy CSS</button>
+      <button class="btn outline" id="modalDownloadPng">PNG</button>
+      <button class="btn solid" id="modalRegenerate">New Palette</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initUi } from "./js/ui.js";
+    import { initChatbot } from "./js/chatbot.js";
+
+      window.addEventListener("load", () => {
+  initUi();
+
+  // Wait 3 seconds before starting the chatbot
+  setTimeout(() => {
+    initChatbot();
+  }, 3000); 
+});
+    
+  </script>
+</body>
+</html>
